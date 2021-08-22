@@ -56,15 +56,10 @@ class ChebyshevCollocaton:
         l - tuning parameter, l > 0
         :return (mesh[N], D-matrix[NxN], D^2-matrix[NxN])
         """
-
-        assert not ("y_max" in kwargs)  # should always be supplied
-        y_max = kwargs["y_max"]
-        y_min = 0.0  # default value
-        l = 1.0  # default value
-        if "y_min" in kwargs:
-            y_min = kwargs["y_min"]
-        if "l" in kwargs:
-            l = kwargs["l"]
+        y_max = kwargs.get("y_max")
+        assert y_max is not None
+        y_min = kwargs.get('y_min', 0.0)
+        l = kwargs.get('l', 1.0)
 
         assert l > 0
         assert y_min < y_max
@@ -89,11 +84,10 @@ class ChebyshevCollocaton:
         :return: (mesh[N], D-matrix[NxN], D^2-matrix[NxN])
         """
 
-        assert not ("r" in kwargs)  # should always be supplied
-        assert not ("l" in kwargs)  # should always be supplied
-
-        r = kwargs["r"]
-        l = kwargs["l"]
+        r = kwargs.get("r")
+        l = kwargs.get("l")
+        assert r is not None
+        assert l is not None
         assert r > l
 
         dz_dy = 2.0 / (r - l)
